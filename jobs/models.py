@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import os
 from django.core.exceptions import ValidationError
+# from ckeditor.fields import RichTextField
 
 def validate_file_size(value):
     max_size = 5 * 1024 * 1024  # 5MB
@@ -53,16 +54,6 @@ class ContactRequest(models.Model):
         verbose_name_plural = 'Contact Requests'
 
 
-
-# class Job(models.Model):
-#     title = models.CharField(max_length=200)
-#     description = models.TextField()
-#     location = models.CharField(max_length=100)
-#     company_name = models.CharField(max_length=100)
-#     posted_at = models.DateTimeField(auto_now_add=True)
-
-# def __str__(self):
-#         return self.title
 class Job(models.Model):
     JOB_TYPES = [
         ('Full-time', 'Full-time'),
@@ -74,22 +65,15 @@ class Job(models.Model):
 
     title = models.CharField(max_length=200)
     description = models.TextField()
+    minimumqualification = models.TextField(default="• Bachelor's Degree\n• 2+ years of experience\n• Strong communication skills")
     location = models.CharField(max_length=100)
     company_name = models.CharField(max_length=100)
     type = models.CharField(max_length=20, choices=JOB_TYPES, default='Full-time')  # New field
     posted_at = models.DateTimeField(auto_now_add=True)
-    # image = models.ImageField(upload_to='jobsimages/', blank=True, null=True)  
+    image = models.ImageField(upload_to='jobsimages/', blank=True, null=True)  # Image upload field
 
     def __str__(self):
         return self.title
-
-# class CV(models.Model):
-#     name = models.CharField(max_length=100)
-#     email = models.EmailField()
-#     file = models.FileField(upload_to='cvs/')
-#     submitted_at = models.DateTimeField(default=timezone.now)
-#     # job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name='cvs')
-#     job = models.ForeignKey(Job, on_delete=models.CASCADE)
 
 class CV(models.Model):
     name = models.CharField(max_length=100)

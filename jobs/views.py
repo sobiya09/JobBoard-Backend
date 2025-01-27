@@ -76,6 +76,7 @@ def update_job(request, id):
     if serializer.is_valid():
         serializer.save()
         return Response({'message': 'Job updated successfully'})
+    
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])

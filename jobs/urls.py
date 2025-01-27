@@ -4,6 +4,8 @@ from .views import JobViewSet, CVViewSet, CVUploadView
 from .views import ContactRequestListCreateView, ContactRequestDetailView
 from django.contrib import admin
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 # router.register('jobs', JobViewSet)
@@ -19,7 +21,6 @@ urlpatterns = [
     path('api/requests/<int:pk>/', ContactRequestDetailView.as_view(), name='contact_request_detail'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 
-
-    
-    
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 import os
 from django.core.exceptions import ValidationError
-# from ckeditor.fields import RichTextField
+
 
 def validate_file_size(value):
     max_size = 5 * 1024 * 1024  # 5MB
@@ -78,8 +78,8 @@ class Job(models.Model):
 class CV(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
-    phone = models.CharField(max_length=20, null=True, blank=True)  # Optional
-    age = models.IntegerField(null=True)  # Optional or required, as per your design
+    phone = models.CharField(max_length=20, null=True, blank=True) 
+    age = models.IntegerField(null=True) 
     salary = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     file = models.FileField(upload_to='cvs/')
     submitted_at = models.DateTimeField(default=timezone.now)
@@ -89,8 +89,8 @@ class CV(models.Model):
     def save(self, *args, **kwargs):
         # Dynamically set the upload_to path based on the job's company name and job title
         if self.job:
-            company_name = self.job.company_name.replace(" ", "_")  # Replace spaces with underscores for folder name
-            job_title = self.job.title.replace(" ", "_")  # Replace spaces with underscores for folder name
+            company_name = self.job.company_name.replace(" ", "_") 
+            job_title = self.job.title.replace(" ", "_")  
             self.file.name = os.path.join('cvs', company_name, job_title, self.file.name)
         super().save(*args, **kwargs)
 
